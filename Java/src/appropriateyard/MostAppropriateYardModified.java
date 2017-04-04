@@ -23,18 +23,44 @@ public class MostAppropriateYardModified{
           }
         }
         
-        //Search for query point in closest Cluster
+        //Search for query point in closest Cluster and find 3 Closest Yards
         double minDistance = -1, distance;
-        GeoLocation minDistanceLocation = null;
+        double min1=-1,min2=-1,min3=-1;
+        GeoLocation minDistanceLocation1 = null;
+        GeoLocation minDistanceLocation2 = null;
+        GeoLocation minDistanceLocation3 = null;
         for (int x : K.get(cur)) {
                 
             distance = GeoLocation.calculateDistance(manager.geoLocations.get(x), inputLocation);
-            if(minDistance == -1 || distance < minDistance) {
-                minDistance = distance;
-                minDistanceLocation = manager.geoLocations.get(x);
+            /*if(min1 == -1 || distance < min1) {
+                min1 = distance;
+                minDistanceLocation1 = manager.geoLocations.get(x);
+            }*/
+            if(min1 > distance || min1 == -1)
+            {	
+            min3 = min2;
+            min2 = min1;
+            min1 = distance;
+            minDistanceLocation3=minDistanceLocation2;
+            minDistanceLocation2=minDistanceLocation1;
+            minDistanceLocation1= manager.geoLocations.get(x);
+            }
+            else if(min2 > distance)
+            {	
+            min3=min2;
+            min2=distance;
+            minDistanceLocation3=minDistanceLocation2;
+            minDistanceLocation2=manager.geoLocations.get(x);
+            }
+            else if(min3 > distance)
+            {	
+            min3=distance;
+            minDistanceLocation3=manager.geoLocations.get(x);
             }
         }
-        System.out.println(minDistanceLocation.toString());
+        System.out.println(minDistanceLocation1.toString());
+        System.out.println(minDistanceLocation2.toString());
+        System.out.println(minDistanceLocation3.toString());
     }
 
   static GeoLocation[] Cluster(List<GeoLocation> G,int k){
