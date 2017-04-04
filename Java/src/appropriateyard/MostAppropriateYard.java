@@ -1,5 +1,3 @@
-package appropriateyard;
-
 /**
  * Created by dakle on 4/4/17.
  */
