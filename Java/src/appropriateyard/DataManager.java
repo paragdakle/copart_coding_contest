@@ -1,4 +1,4 @@
-package extracttext;
+package appropriateyard;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -67,6 +67,19 @@ public class DataManager {
 
     public void generateData() {
         String line;
-
+        if(reader == null) {
+            if(this.openFile()) {
+                //Ignoring first line
+                line = this.getLine();
+                GeoLocation location;
+                while ((line = this.getLine()) != null) {
+                    location = GeoLocation.convertStringToGeolocation(line);
+                    if(location != null) {
+                        geoLocations.add(location);
+                    }
+                }
+                this.closeFile();
+            }
+        }
     }
 }
